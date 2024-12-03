@@ -36,7 +36,7 @@ public class ProductsService {
    }
    public Products getProducts(String productId) {
         return productsRepository.findById(productId).
-                orElse(null);
+                orElseThrow( () -> new RuntimeException("Product not found"));
    }
    public Products updateProducts(String productId, ProductsUpdateRequest request) {
         Products products = getProducts(productId);

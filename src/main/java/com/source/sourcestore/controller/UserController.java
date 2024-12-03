@@ -1,9 +1,11 @@
 package com.source.sourcestore.controller;
 
+import com.source.sourcestore.dto.request.ApiResponse;
 import com.source.sourcestore.dto.request.UserCreationRequest;
 import com.source.sourcestore.dto.request.UserUpdateRequest;
 import com.source.sourcestore.entity.User;
 import com.source.sourcestore.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +18,11 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    User createUser (@RequestBody UserCreationRequest request) {
-       return userService.createUser(request);
+     ApiResponse <User> createUser (@RequestBody  @Valid UserCreationRequest request) {
+        ApiResponse<User> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userService.createUser(request));
+        apiResponse.setCode(1000);
+        return apiResponse;
     }
     @GetMapping
     List<User> getAllUsers() {

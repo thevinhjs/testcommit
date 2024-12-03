@@ -3,6 +3,8 @@ package com.source.sourcestore.service;
 import com.source.sourcestore.dto.request.UserCreationRequest;
 import com.source.sourcestore.dto.request.UserUpdateRequest;
 import com.source.sourcestore.entity.User;
+import com.source.sourcestore.exception.AppException;
+import com.source.sourcestore.exception.ErrorCode;
 import com.source.sourcestore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class UserService {
     public User createUser(UserCreationRequest request) {
         User user = new User();
 
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw  new AppException(ErrorCode.USER_EXCEPTED);
+        }
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
         user.setFirstName(request.getFirstName());

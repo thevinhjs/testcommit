@@ -1,12 +1,19 @@
 package com.source.sourcestore.dto.request;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class UserCreationRequest {
+    @Size(min = 6, message = "USERNAME_INVALID")
     private String username;
+
+    @Size(min = 8, message = "INVALID_PASSWORD")
     private String password;
     private String firstName;
     private String lastName;
+    @Email
     private String email;
     private String phone;
     private LocalDate birthday;
